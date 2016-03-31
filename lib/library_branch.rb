@@ -14,8 +14,8 @@ class LibraryBranch < ActiveRecord::Base
 
 # Custom validator for phone number, because of the weird restrictions on which
 # digits are valid where.
-  def phone_number_valid?
-    number_string = phone_number
+  def phone_number_valid?(phone_number)
+    number_string = phone_number.to_s
     number_string.length == 10 &&
     number_string[0].to_i >= 2 &&
     number_string[1] != number_string[2] &&
