@@ -3,7 +3,7 @@ class CreateLibraryBranchesTable < ActiveRecord::Migration
     create_table :library_branches do |t|
       t.string :branch_name
       t.string :address
-      t.string :phone_number
+      t.integer :phone_number
     end
   end
 end
