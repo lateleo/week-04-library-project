@@ -19,12 +19,12 @@ class Branch < ActiveRecord::Base
 # + \Z requires that the last character of the string matches the last character of the pattern.
 #   together with \A at the beginning, requires an exact number of characters.
   validates :phone_number, format: {with: /\A[2-9](\d)(?!\1)\d-[2-9]\d\d-\d{4}\Z/}
-  before_validation :format_phone_number_properly
+  before_validation :format_phone_number
 
 # This method is called before validation, and converts the phone_number to
 # "xxx-xxx-xxxx" format if it is the proper length. Otherwise, it removes all non-numbers,
 # as well as the first digit if it's a "1".
-  def format_phone_number_properly
+  def format_phone_number
     phone_number.delete!("^0-9")
     phone_number.slice!(0) if (phone_number[0] == "1" && phone_number.length > 10)
     [3,7].each {|n| phone_number.insert(n, "-")} if phone_number.length == 10
