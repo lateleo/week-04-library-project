@@ -18,7 +18,7 @@ class Branch < ActiveRecord::Base
 # + -\d{4} puts a hyphen after the central office code, and follows with 4 digits 0-9.
 # + \Z requires that the last character of the string matches the last character of the pattern.
 #   together with \A at the beginning, requires an exact number of characters.
-  validates :phone_number, format: {with: /\A[2-9](\d)(?!\1)\d-[2-9]\d\d-\d{4}\Z/}
+  validates :phone_number, uniqueness: true, format: {with: /\A[2-9](\d)(?!\1)\d-[2-9]\d\d-\d{4}\Z/}
   before_validation :format_phone_number
 
 # This method is called before validation, and converts the phone_number to
