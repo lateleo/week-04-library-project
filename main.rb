@@ -2,9 +2,9 @@ require_relative "config/environment.rb"
 require "active_record"
 require "pry"
 require "yaml"
-require "./lib/book.rb"
-require "./lib/library_branch.rb"
-require "./lib/patron.rb"
-require "./lib/staff_member.rb"
+require_relative "./lib/book.rb"
+require_relative "./lib/library_branch.rb"
+require_relative "./lib/patron.rb"
+require_relative "./lib/staff_member.rb"
 
 binding.pry

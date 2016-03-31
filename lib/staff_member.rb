@@ -1,5 +1,5 @@
 require "active_record"
 
-class StaffMember.rb < ActiveRecord::Base
+class StaffMember < ActiveRecord::Base
 
 end

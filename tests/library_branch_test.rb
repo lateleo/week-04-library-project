@@ -1,6 +1,8 @@
 require "test_helper"
-require "../lib/library_branch.rb"
+require_relative "../lib/library_branch.rb"
 
 class LibraryBranchTest < MiniTest::Test
-
+  def test_dummy
+    assert(true)
+  end
 end
