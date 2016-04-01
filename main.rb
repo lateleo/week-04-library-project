@@ -11,99 +11,55 @@ def invalid_option_message
   print "That's not a valid option. Please try again: "
 end
 
-def main_options
+def main_options(menu)
   print "---------------------------------------------------------------
-  Main menu options:\n
+  \nMain menu options:\n
   1: Branches
   2: Staff Members
   3: Books
   4: Patrons
-  exit: Exit\n
-  What would you like to do? "
+  exit: Exit\n\nWhat would you like to do? "
 end
 
-def branch_options
+def main_sub_menu_options(sub_menu_name)
   print "---------------------------------------------------------------
-  Branch menu options:\n
-  1: List all branches
-  2: New branch
-  exit: Exit to Main menu\n
-  What would you like to do? "
+  \n#{sub_menu_name.capitalize} menu options:\n
+  1: List all #{sub_menu_name.pluralize}
+  2: New #{sub_menu_name}
+  exit: Exit to Main menu\n\nWhat would you like to do? "
 end
 
-def staff_member_options
-  print "---------------------------------------------------------------
-  Staff member menu options:\n
-  1: Browse all staff members
-  2: New staff member
-  exit: Exit to Main menu\n
-  What would you like to do? "
-end
-
-def book_options
-  print "---------------------------------------------------------------
-  Book menu options:\n
-  1: Browse all books
-  2: New book
-  exit: Exit to Main menu\n
-  What would you like to do? "
-end
-
-def patron_options
-  print "---------------------------------------------------------------
-  Patron menu options:\n
-  1: Browse all patrons
-  2: New patron
-  exit: Exit to Main menu\n
-  What would you like to do? "
-end
-
-def retrieve_choice(menu)
+def retrieve_choice(menu_type, sub_menu_name)
   menu_options = {"main" => [:main_options, 4],
-                  "branch" => [:branch_options, 2],
-                  "staff" => [:staff_member_options, 2],
-                  "book" => [:book_options, 2],
-                  "patron" => [:patron_options, 2]}
-  send(menu_options[menu[0]])
-  invalid_option_message while !(/\A([1-#{menu_options[menu[1]]}]|exit)\Z/ =~ (choice = gets.chomp.downcase))
+                  "sub menu" => [:main_sub_menu_options, 2]}
+  send(menu_options[menu_type][0], sub_menu_name)
+  invalid_option_message while !(/\A([1-#{menu_options[menu_type][1]}]|exit)\Z/ =~ (choice = gets.chomp.downcase))
   choice
 end
 
 def main_menu
-  while (choice = retrieve_choice("main")) != "exit"
-    sub_menus = [:branches_menu, :staff_members_menu, :books_menu, :patrons_menu]
-    send(sub_menus[(choice.to_i - 1)])
+  while (choice = retrieve_choice("main", "main")) != "exit"
+    sub_menus = ["branch", "staff member", "book", "patron"]
+    first_tier_sub_menu(sub_menus[choice.to_i - 1])
   end
 end
 
-def branches_menu
-  while (choice = retrieve_choice("branches")) != "exit"
-    sub_menus = [:browse_all_branches, :new_branch]
-    send(sub_menus[(choice.to_i - 1)])
+def first_tier_sub_menu(sub_menu_name)
+  while (choice = retrieve_choice("sub menu", sub_menu_name)) != "exit"
+    sub_menus = [:browse_all, :create_new_entry]
+    send(sub_menus[(choice.to_i - 1)], sub_menu_name)
   end
 end
 
-def staff_members_menu
-  while (choice = retrieve_choice("staff")) != "exit"
-    sub_menus = [:browse_all_staff_members, :new_staff_member]
-    send(sub_menus[(choice.to_i - 1)])
-  end
+def browse_all(sub_menu_name)
+  puts "---------------------------------------------------------------
+  \n\nSo you'd like to browse all #{sub_menu_name.pluralize}? Right this way!\n\n\n...\n\n\n"
 end
 
-def books_menu
-  while (choice = retrieve_choice("books")) != "exit"
-    sub_menus = [:browse_all_books, :new_book]
-    send(sub_menus[(choice.to_i - 1)])
-  end
+def create_new_entry(sub_menu_name)
+  puts "---------------------------------------------------------------
+  \n\nSo you'd like to enter a new #{sub_menu_name}? Right this way!\n\n\n...\n\n\n"
 end
 
-def patrons_menu
-  while (choice = retrieve_choice("patrons")) != "exit"
-    sub_menus = [:browse_all_patrons, :new_patron]
-    send(sub_menus[(choice.to_i - 1)])
-  end
-end
-
-
-
-binding.pry
+main_menu
+#binding.pry
