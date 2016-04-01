@@ -5,4 +5,7 @@ class Book < ActiveRecord::Base
   validates :title, presence: true
   validates :author, presence: true
   validates :isbn, uniqueness: true
+  validates :branch_id, presence: true
+  belongs_to :branch
+  belongs_to :patron
 end

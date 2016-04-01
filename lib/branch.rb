@@ -20,6 +20,8 @@ class Branch < ActiveRecord::Base
 #   together with \A at the beginning, requires an exact number of characters.
   validates :phone_number, uniqueness: true, format: {with: /\A[2-9](\d)(?!\1)\d-[2-9]\d\d-\d{4}\Z/}
   before_validation :format_phone_number
+  has_many :staff_members
+  has_many :books
 
 # This method is called before validation, and converts the phone_number to
 # "xxx-xxx-xxxx" format if it is the proper length. Otherwise, it removes all non-numbers,
