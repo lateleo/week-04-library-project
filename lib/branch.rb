@@ -1,4 +1,7 @@
 require "active_record"
+require_relative "staff_member.rb"
+require_relative "book.rb"
+require_relative "patron.rb"
 
 class Branch < ActiveRecord::Base
 # has three unique attributes: branch name, phone number, and address.

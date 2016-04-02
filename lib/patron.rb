@@ -1,4 +1,6 @@
 require "active_record"
+require_relative "book.rb"
+require_relative "branch.rb"
 
 class Patron < ActiveRecord::Base
 # two attributes, name and email, the latter of which is unique.

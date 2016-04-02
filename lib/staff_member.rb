@@ -1,4 +1,5 @@
 require "active_record"
+require_relative "branch.rb"
 
 class StaffMember < ActiveRecord::Base
 # has two attributes, name and email, only the latter of which is unique.

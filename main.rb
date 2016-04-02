@@ -73,9 +73,9 @@ end
 # because it is beyond this point that the paths are no longer interchangeable,
 # due to the difference in columns between the different models.
 def browse_all(sub_menu_name)
-  browser_methods = {"branch" => :browse_branches
-                    "staff member" => :browse_staff_members
-                    "book" => :browse_books
+  browser_methods = {"branch" => :browse_branches,
+                    "staff member" => :browse_staff_members,
+                    "book" => :browse_books,
                     "patron" => :browse_patrons}
   send(browser_methods[sub_menu_name])
 end
@@ -85,12 +85,12 @@ end
 # because it is beyond this point that the paths are no longer interchangeable
 # due to the difference in columns between the different models.
 def create_new_entry(sub_menu_name)
-  creation_methods = {"branch" => :create_new_branch
-                    "staff member" => :create_new_staff_member
-                    "book" => :create_new_book
+  creation_methods = {"branch" => :create_new_branch,
+                    "staff member" => :create_new_staff_member,
+                    "book" => :create_new_book,
                     "patron" => :create_new_patron}
-  send(browser_methods[sub_menu_name])
+  send(creation_methods[sub_menu_name])
 end
 
-main_menu
-#binding.pry
+
+binding.pry
