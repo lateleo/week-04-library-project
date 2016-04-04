@@ -101,5 +101,29 @@ def create_new_entry(sub_menu_name)
   send(creation_methods[sub_menu_name])
 end
 
+# Passes the name of a model as a parameter, and returns it as a singularized
+# string with underscores replaced with spaces.
+def make_string(model_name)
+  model_name.table_name.singularize.gsub(/_/," ")
+end
+
+# Used by the book, staff member, and patron sub menus to request non-unique attributes.
+def request(model, attribute)
+  print "Please enter the #{model}'s #{attribute}: "
+  gets.chomp
+end
+
+# Prompts the user for the given attribute for the specified model, and stalling until
+# the attribute is unique. The attribute parameter is ran through gsub to replace
+# spaces with underscores and then converted to a symbol so it can be used as the search
+# attribute in model.find_by. The input attribute defaults to gets.chomp, but
+# can be set to something else if additional validation steps are necessary.
+def request_unique(model, attribute, input = gets.chomp)
+  print "Please enter the #{make_string(model)}'s #{attribute}: "
+  while model.find_by(attribute.gsub(/ /,"_").to_sym => (response = input))
+    print "Sorry, there is already a #{make_string(model)} with that #{attribute}. Please choose another: "
+  end
+  response
+end
 
 binding.pry

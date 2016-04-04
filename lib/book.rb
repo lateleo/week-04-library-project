@@ -8,6 +8,13 @@ class Book < ActiveRecord::Base
   validates :author, presence: true
   validates :isbn, uniqueness: true
   validates :branch_id, presence: true
+  validate :validate_isbn
   belongs_to :branch
   belongs_to :patron
+
+  def validate_isbn
+    unless /\A\d{10}(\d{3})?\Z/ =~ isbn.to_s
+      erros.add(:email, "invalid isbn length")
+    end
+  end
 end
