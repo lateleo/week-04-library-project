@@ -30,8 +30,8 @@ def create_single_branch
   print "---------------------------------------------------------------
   \nVery well. You will need to provide some information about the new branch. "
   branch = Branch.new(name: request_unique(Branch, "name"),
-  address: request_unique(Branch, "address"),
-  phone_number: request_unique(Branch, "phone number", validate_branch_phone_number))
+    address: request_unique(Branch, "address"),
+    phone_number: request_unique(Branch, "phone number", validate_branch_phone_number))
   branch.save
   puts "\n\nGreat! The #{branch.name} branch is in the system! Would you like to create another branch (yes/no)? "
 end

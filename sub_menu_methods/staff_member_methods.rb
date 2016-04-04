@@ -23,7 +23,8 @@ end
 def create_single_staff_member
   print "---------------------------------------------------------------
   \nVery well. You will need to provide some information about the new staff member. "
-  staff_member = StaffMember.new(name: request("staff member", "name"), branch_id: request_branch_id_for("staff member"))
+  staff_member = StaffMember.new(name: request_non_unique("staff member", "name"),
+    branch_id: request_branch_id_for("staff member"))
   staff_member.email = request_unique(StaffMember, "email", validate_email(staff_member.name))
   staff_member.save
   print "\n\nGreat! #{staff_member.name} is in the system! Would you like to create another staff member (yes/no)? "

@@ -17,10 +17,10 @@ end
 def create_single_book
   print "---------------------------------------------------------------
   \nVery well. You will need to provide some information about the new book. "
-  book = Book.new(title: request("book", "title"),
-  author: request("book", "author"),
-  isbn: request_unique(Book, "isbn", validate_isbn),
-  branch_id: request_branch_id_for("book"))
+  book = Book.new(title: request_non_unique("book", "title"),
+    author: request_non_unique("book", "author"),
+    isbn: request_unique(Book, "isbn", validate_isbn),
+    branch_id: request_branch_id_for("book"))
   book.save
   print "\n\nGreat! #{book.title} by #{book.author} is in the system! Would you like to create another book (yes/no)? "
 end

@@ -108,7 +108,7 @@ def make_string(model_name)
 end
 
 # Used by the book, staff member, and patron sub menus to request non-unique attributes.
-def request(model, attribute)
+def request_non_unique(model, attribute)
   print "Please enter the #{model}'s #{attribute}: "
   gets.chomp
 end
