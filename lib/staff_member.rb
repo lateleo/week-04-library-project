@@ -10,7 +10,7 @@ class StaffMember < ActiveRecord::Base
   belongs_to :branch
 
   def validate_email
-    unless /\A#{name.downcase.delete("^a-z")}\d{1,4}@\w+(\.[a-z]{2,3}){1,2}\Z/ =~ email
+    unless /\A#{name.downcase.delete("^a-z")}\d{1,4}@\w+(\.[a-z]{2,3})+\Z/ =~ email
       errors.add(:email, "invalid email format")
     end
   end
