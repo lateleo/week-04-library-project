@@ -68,12 +68,13 @@ end
 
 #---------------------------------------------------------------------
 
-# requires the user to respond with "yes" or "no," and stalls until the user does so.
-def require_yes_no
+# requires the user to respond with "yes" or "no," stalls until the user does so,
+# and returns response == "yes" (true/false)
+def yes_no?
   while !["yes", "no"].include?(response = gets.chomp.downcase)
     puts "Please respond with either 'yes' or 'no'."
   end
-  response
+  response == "yes"
 end
 
 # Used by first_tier_sub_menu to call the appropriate browsing method based
