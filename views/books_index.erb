@@ -1,10 +1,14 @@
 <p><a href="/"><< Back to Library Menu</a></p>
 <h1>Books Index</h1>
 
-<ol>
-  <% @books.each do |book| %>
-    <li><a href="/books/<%= book.id %>"><%= book.name %></a></li>
-  <% end %>
-</ol>
+<% if Book.any? %>
+  <ol>
+    <% @books.each do |book| %>
+      <li><a href="/books/<%= book.id %>"><%= book.name %></a></li>
+    <% end %>
+  </ol>
+<% else %>
+  <p><em>(No Books currently registered)</em></p>
+<% end %>
 
 <p><a href="/books/new">New Book</a></p>

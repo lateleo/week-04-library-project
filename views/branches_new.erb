@@ -1,0 +1,16 @@
+<h1>New Branch</h1>
+
+<% if @branch.errors.any? %>
+  <p><% @branch.errors.full_messages.each do |m| %>
+    Error: <%= m %></br>
+  <% end %></p>
+<% end %>
+
+<form action="/branches/new" method="post">
+  Name:<input type="text" name="name", value="<%= @branch.name %>"></br>
+  Address: <input type="text", name="address", value="<%= @branch.address%>"></br>
+  Phone Number: (<input type="text", name="area", value="<%= @branch.phone_number.slice(0,3)%>",maxlength="3", size="3">)-
+              <input type="text", name="coc", value="<%= @branch.phone_number.slice(4,3)%>", maxlength="3", size="3">-
+              <input type="text", name="local", value="<%= @branch.phone_number.slice(8,4)%>", maxlength="4", size="4"></br>
+  <input type="submit" value="Enter New Branch">
+</form>

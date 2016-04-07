@@ -5,8 +5,8 @@ require_relative "patron.rb"
 
 class Branch < ActiveRecord::Base
 # has three unique attributes: branch name, phone number, and address.
-  validates :name, presence: true, uniqueness: true
-  validates :address, presence: true, uniqueness: true
+  validates :name, presence: {message: "cannot be blank."}, uniqueness: {message: "must be unique."}
+  validates :address, presence:{message: "cannot be blank."}, uniqueness: {message: "must be unique."}
 # the regexp below is incredibly messy. Here is what each part does:
 # + \A requires that the 1st character of the string matches the first character of the pattern.
 # + [2-9] requires the 1st digit of the area code to be a number that isn't 0 or 1.
@@ -21,7 +21,10 @@ class Branch < ActiveRecord::Base
 # + -\d{4} puts a hyphen after the central office code, and follows with 4 digits 0-9.
 # + \Z requires that the last character of the string matches the last character of the pattern.
 #   together with \A at the beginning, requires an exact number of characters.
-  validates :phone_number, uniqueness: true, format: {with: /\A[2-9](\d)(?!\1)\d-[2-9]\d\d-\d{4}\Z/}
+  validates :phone_number, presence: {message: "cannot be blank."},
+  uniqueness: {message: "must be unique."},
+  format: {with: /\A([2-9](\d)(?!\1)\d-[2-9]\d\d-\d{4})?\Z/,
+  message: "must be valid."}
   before_validation :format_phone_number
   has_many :staff_members
   has_many :books
@@ -30,9 +33,10 @@ class Branch < ActiveRecord::Base
 # "xxx-xxx-xxxx" format if it is the proper length. Otherwise, it removes all non-numbers,
 # as well as the first digit if it's a "1".
   def format_phone_number
-    phone_number.delete!("^0-9")
-    phone_number.slice!(0) if (phone_number[0] == "1" && phone_number.length > 10)
-    [3,7].each {|n| phone_number.insert(n, "-")} if phone_number.length == 10
+    if phone_number?
+      phone_number.delete!("^0-9")
+      [3,7].each {|n| phone_number.insert(n, "-")}
+    end
   end
 
 end

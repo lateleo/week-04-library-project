@@ -20,6 +20,26 @@ get "/branches" do
   erb :branches_index
 end
 
+get "/branches/new" do
+  @page_name = "New Branch"
+  @branch = Branch.new
+  erb :branches_new
+end
+
+post "/branches/new" do
+  @page_name = "New Branch"
+  params['phone_number'] = params['area'] << params['coc'] << params['local']
+  ['area', 'coc', 'local'].each {|code| params.delete(code)}
+  @branch = Branch.new(params)
+  @branch.save ? redirect("/branches") : (erb :branches_new)
+end
+
+get "/branches/:id" do
+  @branch = Branch.find_by_id(params['id'])
+  @page_name = @branch.name
+  erb :branches_show
+end
+
 ### STAFF MEMBERS
 get "/staff_members" do
   @page_name = "Staff Members"

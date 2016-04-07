@@ -1,0 +1,10 @@
+<% if @branch %>
+  <h1><%= @branch.name %></h1>
+
+  <p><em>Address:</em> <%= @branch.address %></br>
+  <em>Phone number:</em> <%= @branch.phone_number %></p>
+<% else %>
+  <p>No branch with that ID exists</p>
+<% end %>
+
+<p><a href="/branches">Back to All Branches</a></p>

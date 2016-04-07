@@ -1,10 +1,14 @@
 <p><a href="/"><< Back to Library Menu</a></p>
 <h1>Patrons Index</h1>
 
-<ol>
-  <% @patrons.each do |patron| %>
-    <li><a href="/patrons/<%= patron.id %>"><%= patron.name %></a></li>
-  <% end %>
-</ol>
+<% if Patron.any?%>
+  <ol>
+    <% @patrons.each do |patron| %>
+      <li><a href="/patrons/<%= patron.id %>"><%= patron.name %></a></li>
+    <% end %>
+  </ol>
+<% else %>
+  <p><em>(No Patrons currently registered)</em></p>
+<% end %>
 
 <p><a href="/patrons/new">New Patron</a></p>
