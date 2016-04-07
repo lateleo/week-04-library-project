@@ -47,6 +47,24 @@ get "/staff_members" do
   erb :staff_members_index
 end
 
+get "/staff_members/new" do
+  @page_name = "New Staff Member"
+  @staff_member = StaffMember.new
+  erb :staff_members_new
+end
+
+post "/staff_members/new" do
+  @page_name = "New Staff Member"
+  @staff_member = StaffMember.new(params)
+  @staff_member.save ? redirect("/staff_members") : (erb :staff_members_new)
+end
+
+get "/staff_members/:id" do
+  @staff_member = StaffMember.find_by_id(params['id'])
+  @page_name = (@staff_member ? @staff_member.name : "Error")
+  erb :staff_members_show
+end
+
 ### BOOKS
 get "/books" do
   @page_name = "Books"
