@@ -1,0 +1,10 @@
+<p><a href="/"><< Back to Library Menu</a></p>
+<h1>Patrons Index</h1>
+
+<ol>
+  <% @patrons.each do |patron| %>
+    <li><a href="/patrons/<%= patron.id %>"><%= patron.name %></a></li>
+  <% end %>
+</ol>
+
+<p><a href="/patrons/new">New Patron</a></p>

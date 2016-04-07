@@ -1,0 +1,10 @@
+<p><a href="/"><< Back to Library Menu</a></p>
+<h1>Branches Index</h1>
+
+<ol>
+  <% @branches.each do |branch| %>
+    <li><a href="/branches/<%= branch.id %>"><%= branch.name %></a></li>
+  <% end %>
+</ol>
+
+<p><a href="/branches/new">New Branch</a></p>
