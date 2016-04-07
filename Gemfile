@@ -7,3 +7,7 @@ gem "rake"
 
 gem "pg"
 gem "activerecord"
+
+gem 'sinatra'
+gem 'sinatra-activerecord'
+gem 'sinatra-contrib'

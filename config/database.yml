@@ -1,5 +1,6 @@
-host: 'localhost'
-adapter: 'postgresql'
-database: 'week-three-library'
-encoding: 'utf8'
-pool: 5
+development:
+  host: 'localhost'
+  adapter: 'postgresql'
+  database: 'week-04-library-project'
+  encoding: 'utf8'
+  pool: 5
