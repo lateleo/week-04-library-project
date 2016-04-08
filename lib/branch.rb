@@ -6,7 +6,7 @@ require_relative "patron.rb"
 class Branch < ActiveRecord::Base
 # has three unique attributes: branch name, phone number, and address.
   validates :name, presence: {message: "cannot be blank."}, uniqueness: {message: "must be unique."}
-  validates :address, presence:{message: "cannot be blank."}, uniqueness: {message: "must be unique."}
+  validates :address, presence: {message: "cannot be blank."}, uniqueness: {message: "must be unique."}
 # the regexp below is incredibly messy. Here is what each part does:
 # + \A requires that the 1st character of the string matches the first character of the pattern.
 # + [2-9] requires the 1st digit of the area code to be a number that isn't 0 or 1.

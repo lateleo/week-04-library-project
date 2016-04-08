@@ -3,6 +3,8 @@
 
   <p><em>Email:</em> <%= @staff_member.email %></br>
   <em>Branch:</em> <a href="/branches/<%=@staff_member.branch_id%>"><%= @staff_member.branch.name %></a></p>
+
+  <p><a href="/staff_members/<%= @staff_member.id %>/edit">Edit</a></p>
 <% else %>
   <h1>Error</h1>
   <p>No staff member with that ID exists.</p>

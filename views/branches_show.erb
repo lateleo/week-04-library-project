@@ -3,7 +3,7 @@
 
   <p><em>Address:</em> <%= @branch.address %></br>
   <em>Phone number:</em> <%= @branch.phone_number %></p>
-  <% if @staff_members %>
+  <% if @staff_members.any? %>
     <p>Staff:</br>
     -<% @staff_members.each {|staff_member| %>
     <a href="/staff_members/<%= staff_member.id%>"><%= staff_member.name %></a></br><%}%>

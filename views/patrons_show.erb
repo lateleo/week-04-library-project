@@ -2,8 +2,8 @@
   <h1><%= @patron.name %></h1>
 
   <p><em>Email:</em> <%= @patron.email %></p>
-  <% if @books %>
-    <p>Staff:</br>
+  <% if @books.any? %>
+    <p>Books:</br>
     <% @books.each {|book| %>
     - <a href="/books/<%= book.id%>"><%= book.title %></a> -
     branch: <a href="/branches/<%= book.branch_id %>"><%= book.branch.name %></a></br><%}%>

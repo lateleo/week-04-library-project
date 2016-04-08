@@ -12,7 +12,7 @@ get "/" do
   @page_name = "Home"
   erb :index
 end
-
+#-------------------------------------------------------------------------------------------------------------
 ### BRANCHES
 get "/branches" do
   @page_name = "Branches"
@@ -41,6 +41,7 @@ get "/branches/:id" do
   erb :branches_show
 end
 
+#-------------------------------------------------------------------------------------------------------------
 ### STAFF MEMBERS
 get "/staff_members" do
   @page_name = "Staff Members"
@@ -68,6 +69,21 @@ get "/staff_members/:id" do
   erb :staff_members_show
 end
 
+get "/staff_members/:id/edit" do
+  @staff_member = StaffMember.find_by_id(params['id'])
+  @branches = Branch.all
+  @page_name = (@staff_member ? "#{@staff_member.name} - Edit" : "Error")
+  erb :staff_members_edit
+end
+
+post "/staff_members/:id" do
+  @staff_member = StaffMember.find_by_id(params['id'])
+  @page_name = (@staff_member ? "#{@staff_member.name} - Edit" : "Error")
+  @staff_member.update_attributes(name: params['name'], email: params['email'], branch_id: params['branch_id']) ?
+  redirect("/staff_members/#{@staff_member.id}") : (erb :staff_members_edit)
+end
+
+#-------------------------------------------------------------------------------------------------------------
 ### BOOKS
 get "/books" do
   @page_name = "Books"
@@ -95,6 +111,7 @@ get "/books/:id" do
   erb :books_show
 end
 
+#-------------------------------------------------------------------------------------------------------------
 ### PATRONS
 get "/patrons" do
   @page_name = "Patrons"
@@ -117,7 +134,7 @@ end
 get "/patrons/:id" do
   @patron = Patron.find_by_id(params['id'])
   @books = Book.where(patron_id: params['id'])
-  @page_name = (@patron ? @book.name : "Error")
+  @page_name = (@patron ? @patron.name : "Error")
   erb :patrons_show
 end
 
