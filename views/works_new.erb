@@ -1,0 +1,21 @@
+<h1>New Work</h1>
+
+<% if @work.errors.any? %>
+  <p><% @work.errors.full_messages.each do |m| %>
+    Error: <%= m %></br>
+  <% end %></p>
+<% end %>
+
+<% if Branch.any? %>
+  <form action="/works/new" method="post">
+    <p>Title: <input type="text", name="title", value="<%= @work.title %>"></br>
+      Author: <input type="text", name="author", value="<%= @work.author %>"></br>
+      ISBN: <input type="text", name="isbn", value="<%= @work.isbn %>"></br>
+    <em>(Don't see the right branch listed? <a href="/branches/new">Enter a new one here</a>.)</em></p>
+    <input type="submit" value="Enter New Work">
+  </form>
+<% else %>
+  <p><em>Before you can create new works,
+  you need to create a branch to which to assign them.</em></br>
+  <a href="/branches/new">Create new Branch</a></p>
+<% end %>

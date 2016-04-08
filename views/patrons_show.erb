@@ -3,11 +3,11 @@
   <h1><%= @patron.name %></h1>
 
   <p><em>Email:</em> <%= @patron.email %></p>
-  <% if @books.any? %>
-    <p>Books:</br>
-    <% @books.each {|book| %>
-    - <a href="/books/<%= book.id%>"><%= book.title %></a> -
-    branch: <a href="/branches/<%= book.branch_id %>"><%= book.branch.name %></a></br><%}%></p>
+  <% if @works.any? %>
+    <p>Works:</br>
+    <% @works.each {|work| %>
+    - <a href="/works/<%= work.id%>"><%= work.title %></a> -
+    branch: <a href="/branches/<%= work.branch_id %>"><%= work.branch.name %></a></br><%}%></p>
   <% end %>
   <p><a href="/patrons/<%= @patron.id %>/edit">Edit</a></p>
 <% else %>

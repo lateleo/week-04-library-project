@@ -1,0 +1,11 @@
+<p><a href="/works"><< Back to All Works</a></p>
+<% if @work %>
+  <h1><%= @work.title %></h1>
+
+  <p><em>Author:</em> <%= @work.author %></br>
+  <em>ISBN:</em> <%= @work.isbn %></br></p>
+  <p><a href="/works/<%= @work.id %>/edit">Edit</a></p>
+<% else %>
+  <h1>Error</h1>
+  <p>No work with that ID exists.</p>
+<% end %>

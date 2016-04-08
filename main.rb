@@ -3,7 +3,7 @@ require "sinatra/activerecord"
 require "sinatra/reloader"
 require "pry"
 
-require_relative "lib/book.rb"
+require_relative "lib/work.rb"
 require_relative "lib/branch.rb"
 require_relative "lib/patron.rb"
 require_relative "lib/staff_member.rb"
@@ -101,46 +101,46 @@ end
 
 #-------------------------------------------------------------------------------------------------------------
 ### BOOKS
-get "/books" do
-  @page_name = "Books"
-  @books = Book.all
-  erb :books_index
+get "/works" do
+  @page_name = "Works"
+  @works = Work.all
+  erb :works_index
 end
 
-get "/books/new" do
-  @page_name = "New Book"
+get "/works/new" do
+  @page_name = "New Work"
   @branches = Branch.all
-  @book = Book.new
-  erb :books_new
+  @work = Work.new
+  erb :works_new
 end
 
-post "/books/new" do
-  @page_name = "New Book"
+post "/works/new" do
+  @page_name = "New Work"
   @branches = Branch.all
-  @book = Book.new(params)
-  @book.save ? redirect("/books") : (erb :books_new)
+  @work = Work.new(params)
+  @work.save ? redirect("/works") : (erb :works_new)
 end
 
-get "/books/:id" do
-  @book = Book.find_by_id(params['id'])
-  @page_name = (@book ? @book.title : "Error")
-  erb :books_show
+get "/works/:id" do
+  @work = Work.find_by_id(params['id'])
+  @page_name = (@work ? @work.title : "Error")
+  erb :works_show
 end
 
-get "/books/:id/edit" do
-  @book = Book.find_by_id(params['id'])
+get "/works/:id/edit" do
+  @work = Work.find_by_id(params['id'])
   @branches = Branch.all
-  @page_name = (@book ? "#{@book.title} - Edit" : "Error")
-  erb :books_edit
+  @page_name = (@work ? "#{@work.title} - Edit" : "Error")
+  erb :works_edit
 end
 
-post "/books/:id" do
-  @book = Book.find_by_id(params['id'])
+post "/works/:id" do
+  @work = Work.find_by_id(params['id'])
   @branches = Branch.all
-  @page_name = (@book ? "#{@book.title} - Edit" : "Error")
-  @book.update_attributes(title: params['title'], author: params['author'],
+  @page_name = (@work ? "#{@work.title} - Edit" : "Error")
+  @work.update_attributes(title: params['title'], author: params['author'],
   isbn: params['isbn'], branch_id: params['branch_id']) ?
-  redirect("/books/#{@book.id}") : (erb :books_edit)
+  redirect("/works/#{@work.id}") : (erb :works_edit)
 end
 #-------------------------------------------------------------------------------------------------------------
 ### PATRONS
@@ -164,7 +164,7 @@ end
 
 get "/patrons/:id" do
   @patron = Patron.find_by_id(params['id'])
-  @books = Book.where(patron_id: params['id'])
+  @works = Work.where(patron_id: params['id'])
   @page_name = (@patron ? @patron.name : "Error")
   erb :patrons_show
 end

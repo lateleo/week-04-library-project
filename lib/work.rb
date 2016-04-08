@@ -1,9 +1,6 @@
-require "active_record"
-require_relative "branch.rb"
-require_relative "patron.rb"
 require "pry"
 
-class Book < ActiveRecord::Base
+class Work < ActiveRecord::Base
 # three attributes: title, author and ISBN, the latter of which is unique.
   validates :title, presence: {message: "cannot be blank."}
   validates :author, presence: {message: "cannot be blank."}
@@ -11,8 +8,8 @@ class Book < ActiveRecord::Base
   uniqueness: {message: "must be unique."}
   validates :branch_id, presence: {message: "cannot be blank."}
   validate :validate_isbn
-  belongs_to :branch
-  belongs_to :patron
+  has_many :copies
+
 
   def validate_checksum
     sum = 0

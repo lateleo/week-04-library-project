@@ -1,7 +1,4 @@
-require "active_record"
-require_relative "staff_member.rb"
-require_relative "book.rb"
-require_relative "patron.rb"
+require "pry"
 
 class Branch < ActiveRecord::Base
 # has three unique attributes: branch name, phone number, and address.
@@ -27,7 +24,8 @@ class Branch < ActiveRecord::Base
   message: "must be valid."}
   before_validation :format_phone_number
   has_many :staff_members
-  has_many :books
+  has_many :copies
+
 
 # This method is called before validation, and converts the phone_number to
 # "xxx-xxx-xxxx" format if it is the proper length. Otherwise, it removes all non-numbers,
