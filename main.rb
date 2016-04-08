@@ -102,4 +102,10 @@ get "/patrons" do
   erb :patrons_index
 end
 
+get "/patrons/new" do
+  @page_name = "New Patron"
+  @patron = Patron.new
+  erb :patrons_new
+end
+
 #binding.pry
