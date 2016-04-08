@@ -43,13 +43,13 @@ end
 
 get "/branches/:id/edit" do
   @branch = Branch.find_by_id(params['id'])
-  @page_name = (@branch ? "#{@branch.name} - Edit" : "Error")
+  @page_name = (@branch ? "Edit - #{@branch.name}" : "Error")
   erb :branches_edit
 end
 
 post "/branches/:id" do
   @branch = Branch.find_by_id(params['id'])
-  @page_name = (@branch ? "#{@branch.name} - Edit" : "Error")
+  @page_name = (@branch ? "Edit - #{@branch.name}" : "Error")
   params['phone_number'] = params['area'] << params['coc'] << params['local']
   ['area', 'coc', 'local'].each {|code| params.delete(code)}
   @branch.update_attributes(name: params['name'], address: params['address'], phone_number: params['phone_number']) ?
@@ -87,13 +87,13 @@ end
 get "/staff_members/:id/edit" do
   @staff_member = StaffMember.find_by_id(params['id'])
   @branches = Branch.all
-  @page_name = (@staff_member ? "#{@staff_member.name} - Edit" : "Error")
+  @page_name = (@staff_member ? "Edit - #{@staff_member.name}" : "Error")
   erb :staff_members_edit
 end
 
 post "/staff_members/:id" do
   @staff_member = StaffMember.find_by_id(params['id'])
-  @page_name = (@staff_member ? "#{@staff_member.name} - Edit" : "Error")
+  @page_name = (@staff_member ? "Edit - #{@staff_member.name}" : "Error")
   @branches = Branch.all
   @staff_member.update_attributes(name: params['name'], email: params['email'], branch_id: params['branch_id']) ?
   redirect("/staff_members/#{@staff_member.id}") : (erb :staff_members_edit)
@@ -109,14 +109,12 @@ end
 
 get "/works/new" do
   @page_name = "New Work"
-  @branches = Branch.all
   @work = Work.new
   erb :works_new
 end
 
 post "/works/new" do
   @page_name = "New Work"
-  @branches = Branch.all
   @work = Work.new(params)
   @work.save ? redirect("/works") : (erb :works_new)
 end
@@ -129,18 +127,32 @@ end
 
 get "/works/:id/edit" do
   @work = Work.find_by_id(params['id'])
-  @branches = Branch.all
-  @page_name = (@work ? "#{@work.title} - Edit" : "Error")
+  @page_name = (@work ? "Edit - #{@work.title}" : "Error")
   erb :works_edit
 end
 
 post "/works/:id" do
   @work = Work.find_by_id(params['id'])
-  @branches = Branch.all
-  @page_name = (@work ? "#{@work.title} - Edit" : "Error")
-  @work.update_attributes(title: params['title'], author: params['author'],
-  isbn: params['isbn'], branch_id: params['branch_id']) ?
+  @page_name = (@work ? "Edit - #{@work.title}" : "Error")
+  @work.update_attributes(title: params['title'],
+  author: params['author'], isbn: params['isbn']) ?
   redirect("/works/#{@work.id}") : (erb :works_edit)
+end
+
+get "/works/:id/new_copy" do
+  @work = Work.find_by_id(params['id'])
+  @branches = Branch.all
+  @page_name = "#{@work.title} - New Copy"
+  @copy = Copy.new(work_id: params['id'])
+  erb :copies_new
+end
+
+post "/works/:id/new_copy" do
+  @work = Work.find_by_id(params['id'])
+  @branches = Branch.all
+  @page_name = "#{@work.title} - New Copy"
+  @copy = Copy.new(work_id: params['id'], branch_id: params['branch_id'])
+  @copy.save ? redirect("/works/#{@work.id}") : (erb :copies_new)
 end
 #-------------------------------------------------------------------------------------------------------------
 ### PATRONS
@@ -171,13 +183,13 @@ end
 
 get "/patrons/:id/edit" do
   @patron = Patron.find_by_id(params['id'])
-  @page_name = (@patron ? "#{@patron.name} - Edit" : "Error")
+  @page_name = (@patron ? "Edit - #{@patron.name}" : "Error")
   erb :patrons_edit
 end
 
 post "/patrons/:id" do
   @patron = Patron.find_by_id(params['id'])
-  @page_name = (@patron ? "#{@patron.name} - Edit" : "Error")
+  @page_name = (@patron ? "Edit - #{@patron.name}" : "Error")
   @patron.update_attributes(name: params['name'], email: params['email']) ?
   redirect("/patrons/#{@patron.id}") : (erb :patrons_edit)
 end
