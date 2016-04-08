@@ -41,6 +41,21 @@ get "/branches/:id" do
   erb :branches_show
 end
 
+get "/branches/:id/edit" do
+  @branch = Branch.find_by_id(params['id'])
+  @page_name = (@branch ? "#{@branch.name} - Edit" : "Error")
+  erb :branches_edit
+end
+
+post "/branches/:id" do
+  @branch = Branch.find_by_id(params['id'])
+  @page_name = (@branch ? "#{@branch.name} - Edit" : "Error")
+  params['phone_number'] = params['area'] << params['coc'] << params['local']
+  ['area', 'coc', 'local'].each {|code| params.delete(code)}
+  @branch.update_attributes(name: params['name'], address: params['address'], phone_number: params['phone_number']) ?
+  redirect("/branches/#{@branch.id}") : (erb :branches_edit)
+end
+
 #-------------------------------------------------------------------------------------------------------------
 ### STAFF MEMBERS
 get "/staff_members" do
@@ -79,6 +94,7 @@ end
 post "/staff_members/:id" do
   @staff_member = StaffMember.find_by_id(params['id'])
   @page_name = (@staff_member ? "#{@staff_member.name} - Edit" : "Error")
+  @branches = Branch.all
   @staff_member.update_attributes(name: params['name'], email: params['email'], branch_id: params['branch_id']) ?
   redirect("/staff_members/#{@staff_member.id}") : (erb :staff_members_edit)
 end
@@ -111,6 +127,21 @@ get "/books/:id" do
   erb :books_show
 end
 
+get "/books/:id/edit" do
+  @book = Book.find_by_id(params['id'])
+  @branches = Branch.all
+  @page_name = (@book ? "#{@book.title} - Edit" : "Error")
+  erb :books_edit
+end
+
+post "/books/:id" do
+  @book = Book.find_by_id(params['id'])
+  @branches = Branch.all
+  @page_name = (@book ? "#{@book.title} - Edit" : "Error")
+  @book.update_attributes(title: params['title'], author: params['author'],
+  isbn: params['isbn'], branch_id: params['branch_id']) ?
+  redirect("/books/#{@book.id}") : (erb :books_edit)
+end
 #-------------------------------------------------------------------------------------------------------------
 ### PATRONS
 get "/patrons" do
@@ -138,4 +169,16 @@ get "/patrons/:id" do
   erb :patrons_show
 end
 
+get "/patrons/:id/edit" do
+  @patron = Patron.find_by_id(params['id'])
+  @page_name = (@patron ? "#{@patron.name} - Edit" : "Error")
+  erb :patrons_edit
+end
+
+post "/patrons/:id" do
+  @patron = Patron.find_by_id(params['id'])
+  @page_name = (@patron ? "#{@patron.name} - Edit" : "Error")
+  @patron.update_attributes(name: params['name'], email: params['email']) ?
+  redirect("/patrons/#{@patron.id}") : (erb :patrons_edit)
+end
 #binding.pry

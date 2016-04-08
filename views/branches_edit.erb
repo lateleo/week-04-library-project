@@ -1,0 +1,19 @@
+<h1>Edit Branch: <%= @branch.name %></h1>
+
+<% if @branch.errors.any? %>
+  <p><% @branch.errors.full_messages.each do |m| %>
+    Error: <%= m %></br>
+  <% end %></p>
+<% end %>
+
+<form action="/branches/<%= @branch.id %>" method="post">
+  <p>Name: <input type="text" name="name", value="<%= @branch.name %>"></br>
+  Address: <input type="text", name="address", value="<%= @branch.address%>"></br>
+  Phone Number: (<input type="text", name="area", maxlength="3", size="3",
+                value="<%= @branch.phone_number ? @branch.phone_number.slice(0,3) : ""%>">) -
+                <input type="text", name="coc", maxlength="3", size="3",
+                value="<%= @branch.phone_number ? @branch.phone_number.slice(4,3) : ""%>"> -
+                <input type="text", name="local", maxlength="4", size="4",
+                value="<%= @branch.phone_number ? @branch.phone_number.slice(8,4) : ""%>"></p>
+  <input type="submit" value="Update Branch">
+</form>

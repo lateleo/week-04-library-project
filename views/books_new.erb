@@ -14,8 +14,8 @@
       Branch: <select name="branch_id">
         <option selected disabled><em>Choose One:</em></option>
         <% @branches.each do |branch| %>
-        <% #Ignore atom's color coding of the following line, it doesn't know what it's doing. %>
-          <option value="<%= branch.id %>" <%="selected" if branch.id == @book.branch_id%> ><%=branch.name%></option>
+          <% branch.id == @book.branch_id ? selected = "selected" : selected = "" %>
+          <option value="<%= branch.id %>" <%= selected %>><%=branch.name%></option>
         <% end %>
       </select></br>
     <em>(Don't see the right branch listed? <a href="/branches/new">Enter a new one here</a>.)</em></p>
