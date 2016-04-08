@@ -7,6 +7,7 @@ require_relative "lib/work.rb"
 require_relative "lib/branch.rb"
 require_relative "lib/patron.rb"
 require_relative "lib/staff_member.rb"
+require_relative "lib/copy.rb"
 
 get "/" do
   @page_name = "Home"
@@ -47,7 +48,7 @@ get "/branches/:id/edit" do
   erb :branches_edit
 end
 
-post "/branches/:id" do
+post "/branches/:id/edit" do
   @branch = Branch.find_by_id(params['id'])
   @page_name = (@branch ? "Edit - #{@branch.name}" : "Error")
   params['phone_number'] = params['area'] << params['coc'] << params['local']
@@ -91,7 +92,7 @@ get "/staff_members/:id/edit" do
   erb :staff_members_edit
 end
 
-post "/staff_members/:id" do
+post "/staff_members/:id/edit" do
   @staff_member = StaffMember.find_by_id(params['id'])
   @page_name = (@staff_member ? "Edit - #{@staff_member.name}" : "Error")
   @branches = Branch.all
@@ -122,6 +123,9 @@ end
 get "/works/:id" do
   @work = Work.find_by_id(params['id'])
   @page_name = (@work ? @work.title : "Error")
+  @branches = Branch.all
+  @patrons = Patron.all
+  @copies = Copy.where(work_id: params['id'])
   erb :works_show
 end
 
@@ -131,11 +135,11 @@ get "/works/:id/edit" do
   erb :works_edit
 end
 
-post "/works/:id" do
+post "/works/:id/edit" do
   @work = Work.find_by_id(params['id'])
   @page_name = (@work ? "Edit - #{@work.title}" : "Error")
-  @work.update_attributes(title: params['title'],
-  author: params['author'], isbn: params['isbn']) ?
+  @work.update_attributes(title: params['title'], author: params['author'],
+  year: params['year'], isbn: params['isbn']) ?
   redirect("/works/#{@work.id}") : (erb :works_edit)
 end
 
@@ -176,7 +180,8 @@ end
 
 get "/patrons/:id" do
   @patron = Patron.find_by_id(params['id'])
-  @works = Work.where(patron_id: params['id'])
+  @copies = Copy.where(patron_id: params['id'])
+  @branches = Branch.all
   @page_name = (@patron ? @patron.name : "Error")
   erb :patrons_show
 end
@@ -187,10 +192,28 @@ get "/patrons/:id/edit" do
   erb :patrons_edit
 end
 
-post "/patrons/:id" do
+post "/patrons/:id/edit" do
   @patron = Patron.find_by_id(params['id'])
   @page_name = (@patron ? "Edit - #{@patron.name}" : "Error")
   @patron.update_attributes(name: params['name'], email: params['email']) ?
   redirect("/patrons/#{@patron.id}") : (erb :patrons_edit)
+end
+
+get "/patrons/:id/checkout" do
+  @patron = Patron.find_by_id(params['id'])
+  @page_name = (@patron ? "Checkout - #{@patron.name}" : "Error")
+  @branch = Branch.find_by_id(params['branch_id'])
+  @copies = Copy.all
+  @works = Work.all
+  erb :patrons_checkout
+end
+
+post "/patrons/:id/checkout" do
+  @patron = Patron.find_by_id(params['id'])
+  @page_name = (@patron ? "Checkout - #{@patron.name}" : "Error")
+  @branch = Branch.find_by(id: params['branch_id'])
+  @copy = Copy.find_by_id(params['copy_id'])
+  @copy.update_attributes(patron_id: params['id']) ?
+    redirect("/patrons/#{@patron.id}") : (erb :patrons_checkout)
 end
 #binding.pry

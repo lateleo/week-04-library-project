@@ -9,7 +9,7 @@
     -<% @staff_members.each {|staff_member| %>
     <a href="/staff_members/<%= staff_member.id%>"><%= staff_member.name %></a></br><%}%></p>
   <% end %>
-  <p><a href="/branches/<%= @branch.id %>/edit">Edit</a></p>
+  <p><a href="/branches/<%= @branch.id %>/edit">Edit info</a></p>
 <% else %>
   <h1>Error</h1>
   <p>No branch with that ID exists</p>

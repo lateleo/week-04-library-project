@@ -4,7 +4,7 @@
 <% if Work.any? %>
   <ol>
     <% @works.each do |work| %>
-      <li><a href="/works/<%= work.id %>"><%= work.id %>, <%= work.title %></a></li>
+      <li><a href="/works/<%= work.id %>"><i><%= work.title %></i></a>, <%= work.author %> (<%= work.year %>)</li>
     <% end %>
   </ol>
 <% else %>

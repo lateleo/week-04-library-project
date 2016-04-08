@@ -1,15 +1,15 @@
 require "pry"
 
 class Work < ActiveRecord::Base
-# three attributes: title, author and ISBN, the latter of which is unique.
+# four attributes: title, author, year and ISBN, the latter of which is unique.
   validates :title, presence: {message: "cannot be blank."}
   validates :author, presence: {message: "cannot be blank."}
+  validates :year, presence: {message: "cannot be blank."},
+    numericality: {allow_nil: true, less_than_or_equal_to: Time.now.year, message: "cannot be in the future."}
   validates :isbn, presence: {message: "cannot be blank."},
-  uniqueness: {message: "must be unique."}
-  validates :branch_id, presence: {message: "cannot be blank."}
+    uniqueness: {message: "must be unique."}
   validate :validate_isbn
   has_many :copies
-
 
   def validate_checksum
     sum = 0

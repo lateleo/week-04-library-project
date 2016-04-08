@@ -3,8 +3,22 @@
   <h1><%= @work.title %></h1>
 
   <p><em>Author:</em> <%= @work.author %></br>
-  <em>ISBN:</em> <%= @work.isbn %></br></p>
-  <p><a href="/works/<%= @work.id %>/edit">Edit</a> - Add New Copy</p>
+  <em>Year:</em> <%= @work.year %></br>
+  <em>ISBN:</em> <%= @work.isbn %></br>
+  <a href="/works/<%= @work.id %>/edit">Edit info</a></p>
+  <p><em>Available Copies:</em></br>
+  <ul><% @branches.each { |branch| %>
+    <%(%><li><a href="/branches/<%= branch.id%>"><%=branch.name%></a>:
+    <%= @copies.where(branch_id: branch.id, patron_id: nil).count%><%) if @copies.find_by(branch_id: branch.id) } %>
+  </ul></p>
+  <% if @copies.where.not(patron_id: nil)%>
+    <p><em>Patrons with Checked-out Copies:</em></br>
+    <ul><% @copies.each { |copy| %>
+      <% (%><li><a href="/patrons/<%= copy.patron_id%>"><%=copy.patron.name%></a>
+        (<%= copy.branch.name %>)<%) if copy.patron_id } %>
+      </ul></p>
+  <% end %>
+  <a href="/works/<%= @work.id%>/new_copy">Add New Copy</a></p>
 <% else %>
   <h1>Error</h1>
   <p>No work with that ID exists.</p>

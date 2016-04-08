@@ -6,7 +6,7 @@
   <% end %></p>
 <% end %>
 
-<form action="/branches/<%= @branch.id %>" method="post">
+<form action="/branches/<%= @branch.id %>/edit" method="post">
   <p>Name: <input type="text" name="name", value="<%= @branch.name %>"></br>
   Address: <input type="text", name="address", value="<%= @branch.address%>"></br>
   Phone Number: (<input type="text", name="area", maxlength="3", size="3",

@@ -6,10 +6,10 @@
   <% end %></p>
 <% end %>
 
-<form action="/works/<%= @work.id %>" method="post">
+<form action="/works/<%= @work.id %>/edit" method="post">
   <p>Title: <input type="text", name="title", value="<%= @work.title %>"></br>
     Author: <input type="text", name="author", value="<%= @work.author %>"></br>
-    ISBN: <input type="text", name="isbn", value="<%= @work.isbn %>"></br>
-  <em>(Don't see the right branch listed? <a href="/branches/new">Enter a new one here</a>.)</em></p>
+    Year: <input type="text", name="year", value="<%= @work.year %>"></br>
+    ISBN: <input type="text", name="isbn", value="<%= @work.isbn %>"></br></p>
   <input type="submit" value="Update Work">
 </form>

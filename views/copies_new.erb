@@ -1,4 +1,4 @@
-<p><a href="/works/<%= @work.id %>"><< Back to <%= @work.title %></a></p>
+<a href="/works/<%= @work.id %>"><< Back to <%= @work.title %></a></br>
 <h1> New Copy - <%= @work.title %></h1>
 
 <% if @copy.errors.any? %>
@@ -12,12 +12,12 @@
     <p>Branch: <select name="branch_id">
       <option selected disabled>Choose One:</option>
     <% @branches.each do |branch| %>
-      <% branch.id == @staff_member.branch_id ? selected = "selected" : selected = "" %>
+      <% branch.id == @copy.branch_id ? selected = "selected" : selected = "" %>
       <option value="<%= branch.id %>" <%= selected %>><%=branch.name%></option>
     <% end %>
   </select></br>
   <em>(Don't see the right branch listed? <a href="/branches/new">Enter a new one here</a>.)</em></p>
-  <input type="submit" value="Enter New Copy">
+  <input type="submit" value="Create New Copy">
   </form>
 <% else %>
   <p><em>Before you can create new copies of a work,
