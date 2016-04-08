@@ -7,17 +7,21 @@
 <% end %>
 
 <% if Branch.any? %>
-  <form action="/staff_member/new" method="post">
-    Name:<input type="text", name="name", value="<%= @staff_member.name %>"></br>
-    Email:<input type="text", name="email", value="<%= @staff_member.name %>"></br>
-    Branch:<select name="branch_id">
-      <% Branch.all.each do |branch| %>
-        <option value=branch.id><%=branch.name%></option>
+  <form action="/staff_members/new" method="post">
+    <p>Name: <input type="text", name="name", value="<%= @staff_member.name %>"></br>
+    Email: <input type="text", name="email", value="<%= @staff_member.email %>"></br>
+    Branch: <select name="branch_id">
+      <option selected disabled>Choose One:</option>
+      <% @branches.each do |branch| %>
+      <% #Ignore atom's color coding of the following line, it doesn't know what it's doing. %>
+        <option value="<%= branch.id %>" <%= "selected" if branch.id == @staff_member.branch_id%>><%=branch.name%></option>
       <% end %>
+    </select></br>
+    <em>(Don't see the right branch listed? <a href="/branches/new">Enter a new one here</a>.)</em></p>
     <input type="submit" value="Enter New Staff Member">
   </form>
 <% else %>
   <p><em>Before you can create new staff members,
   you need to create a branch to which to assign them.</em></br>
-  <a href="/branch/new">Create new Branch</a></p>
+  <a href="/branches/new">Create new Branch</a></p>
 <% end %>

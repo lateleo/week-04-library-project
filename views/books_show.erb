@@ -1,0 +1,12 @@
+<% if @book %>
+  <h1><%= @book.title %></h1>
+
+  <p><em>Author:</em> <%= @book.author %></br>
+  <em>ISBN:</em> <%= @book.isbn %></br>
+  <em>Home branch:</em> <a href="/branches/<%=@book.branch_id%>"><%= @book.branch.name %></a></p>
+<% else %>
+  <h1>Error</h1>
+  <p>No book with that ID exists.</p>
+<% end %>
+
+<p><a href="/books"><< Back to All Books</a></p>

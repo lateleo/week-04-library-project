@@ -3,6 +3,11 @@
 
   <p><em>Address:</em> <%= @branch.address %></br>
   <em>Phone number:</em> <%= @branch.phone_number %></p>
+  <% if @staff_members %>
+    <p>Staff:</br>
+    -<% @staff_members.each {|staff_member| %>
+    <a href="/staff_members/<%= staff_member.id%>"><%= staff_member.name %></a></br><%}%>
+  <% end %>
 <% else %>
   <h1>Error</h1>
   <p>No branch with that ID exists</p>
