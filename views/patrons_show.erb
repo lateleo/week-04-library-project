@@ -1,0 +1,16 @@
+<% if @patron %>
+  <h1><%= @patron.name %></h1>
+
+  <p><em>Email:</em> <%= @patron.email %></p>
+  <% if @books %>
+    <p>Staff:</br>
+    <% @books.each {|book| %>
+    - <a href="/books/<%= book.id%>"><%= book.title %></a> -
+    branch: <a href="/branches/<%= book.branch_id %>"><%= book.branch.name %></a></br><%}%>
+  <% end %>
+<% else %>
+  <h1>Error</h1>
+  <p>No patron with that ID exists</p>
+<% end %>
+
+<p><a href="/patrons"><< Back to All Patrons</a></p>

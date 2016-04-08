@@ -1,0 +1,13 @@
+<h1>New Patron</h1>
+
+<% if @patron.errors.any? %>
+  <p><% @patron.errors.full_messages.each do |m| %>
+    Error: <%= m %></br>
+  <% end %></p>
+<% end %>
+
+<form action="/patrons/new" method="post">
+  <p>Name: <input type="text", name="name", value="<%= @patron.name %>"></br>
+  Email: <input type="text", name="email", value="<%= @patron.email %>"></br>
+  <input type="submit" value="Enter New Staff Member">
+</form>

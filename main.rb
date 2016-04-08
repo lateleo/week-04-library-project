@@ -86,7 +86,7 @@ post "/books/new" do
   @page_name = "New Book"
   @branches = Branch.all
   @book = Book.new(params)
-  @book.save ? redirect("/books"): (erb :books_new)
+  @book.save ? redirect("/books") : (erb :books_new)
 end
 
 get "/books/:id" do
@@ -106,6 +106,19 @@ get "/patrons/new" do
   @page_name = "New Patron"
   @patron = Patron.new
   erb :patrons_new
+end
+
+post "/patrons/new" do
+  @page_name = "New Patron"
+  @patron = Patron.new(params)
+  @patron.save ? redirect("/patrons") : (erb :patrons_new)
+end
+
+get "/patrons/:id" do
+  @patron = Patron.find_by_id(params['id'])
+  @books = Book.where(patron_id: params['id'])
+  @page_name = (@patron ? @book.name : "Error")
+  erb :patrons_show
 end
 
 #binding.pry

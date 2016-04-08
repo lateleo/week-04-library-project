@@ -8,10 +8,9 @@ class Book < ActiveRecord::Base
   validates :title, presence: {message: "cannot be blank."}
   validates :author, presence: {message: "cannot be blank."}
   validates :isbn, presence: {message: "cannot be blank."},
-  uniqueness: {scope: [:title, :author], message: "must be unique for each book."}
+  uniqueness: {message: "must be unique."}
   validates :branch_id, presence: {message: "cannot be blank."}
   validate :validate_isbn
-  validate :validate_branch_id
   belongs_to :branch
   belongs_to :patron
 
@@ -24,11 +23,5 @@ class Book < ActiveRecord::Base
   def validate_isbn
     isbn.gsub!("-","")
     errors.add(:isbn, "must be valid.") unless (/\A(97[89])?\d{10}\Z/ =~ isbn) && validate_checksum
-  end
-
-  def validate_branch_id
-    unless Branch.find_by_id(branch_id)
-      errors.add(:branch_id, "must choose a branch.")
-    end
   end
 end
