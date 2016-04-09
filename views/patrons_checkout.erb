@@ -5,7 +5,7 @@
   Available Works:<form action="/patrons/<%=@patron.id%>/checkout" method="post">
     <input type="hidden", name="branch_id", value="<%=@branch.id%>">
     <% @works.each { |work| %>
-      <%(%><input type="radio", name="copy_id", value="<%= @copies.find_by(work_id: work.id).id%>">
+      <%(%><input type="radio", name="copy_id", value="<%= @copies.find_by(work_id: work.id, branch_id: @branch.id).id%>">
         <em><%= work.title %></em></br><%) if @copies.find_by(work_id: work.id, branch_id: @branch.id) } %></p>
     <p><input type="submit", value="Continue"></p>
   </form>

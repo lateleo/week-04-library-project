@@ -20,7 +20,7 @@ class Branch < ActiveRecord::Base
 #   together with \A at the beginning, requires an exact number of characters.
   validates :phone_number, presence: {message: "cannot be blank."},
   uniqueness: {message: "must be unique."},
-  format: {with: /\A([2-9](\d)(?!\1)\d-[2-9]\d\d-\d{4})?\Z/,
+  format: {with: /\A([2-9](\d)(?!\2)\d-[2-9]\d\d-\d{4})?\Z/,
   message: "must be valid."}
   before_validation :format_phone_number
   has_many :patrons

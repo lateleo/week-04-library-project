@@ -224,7 +224,6 @@ end
 post "/patrons/:id/return" do
   @copies = Copy.where(patron_id: params['id'])
   @copies.each {|copy| copy.update_attributes(patron_id: nil) if params[copy.id.to_s] == copy.id.to_s}
-  #binding.pry
   redirect("/patrons/#{params['id']}")
 end
 #binding.pry

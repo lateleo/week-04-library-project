@@ -6,8 +6,9 @@
   <em>Phone number:</em> <%= @branch.phone_number %></p>
   <% if @staff_members.any? %>
     <p>Staff:</br>
-    -<% @staff_members.each {|staff_member| %>
-    <a href="/staff_members/<%= staff_member.id%>"><%= staff_member.name %></a></br><%}%></p>
+    <ul><% @staff_members.each {|staff_member| %>
+    <li><a href="/staff_members/<%= staff_member.id%>"><%= staff_member.name %></a></br><%}%>
+    </ul></p>
   <% end %>
   <p><a href="/branches/<%= @branch.id %>/edit">Edit info</a></p>
 <% else %>
