@@ -7,6 +7,13 @@ class Patron < ActiveRecord::Base
   validates :email, presence: {message: "cannot be blank."},
   uniqueness: {message: "must be unique."},
   format: {with: /\A\w+@\w+(\.[a-z]{2,4})+\Z/, message: "must be valid."}
+  validates :branch_id, presence: {message: "cannot be blank."}
   has_many :copies
+  belongs_to :branch
+
+
+  def do_pry
+    binding.pry
+  end
 
 end

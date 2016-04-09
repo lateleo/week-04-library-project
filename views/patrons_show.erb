@@ -3,24 +3,29 @@
   <h1><%= @patron.name %></h1>
 
   <p><em>Email:</em> <%= @patron.email %></br>
+  <em>Primary Branch:</em> <a href="/branches/<%=@patron.branch_id%>"><%= @patron.branch.name %></a></br>
   <a href="/patrons/<%= @patron.id %>/edit">Edit info</a></p>
   <% if @copies.any? %>
-    <p>Checked-out Items:</br>
-    <ul><% @copies.each {|copy| %>
-    <li><a href="/works/<%=copy.work_id%>"><em><%= copy.work.title %></em></a>,
-      <%= copy.work.author %> (<%= copy.work.year %>)
-      Branch: <a href="/branches/<%= copy.branch_id %>"><%= copy.branch.name %></a></br><%}%>
-    </ul></p>
+    <p>Checked-out Items:<form action="/patrons/<%=@patron.id%>/return" method="post">
+      <% @copies.each {|copy| %>
+        <input type="checkbox", name ="<%=copy.id%>", value="<%= copy.id %>">
+          <a href="/works/<%=copy.work_id%>"><em><%= copy.work.title %></em></a>,
+          <%= copy.work.author %> (<%= copy.work.year %>)
+          Branch: <a href="/branches/<%= copy.branch_id %>"><%= copy.branch.name %></a></br>
+        </input>
+      <%}%>
+      </p><input type="submit" value="Return Selected Items">
+    </form>
   <% end %>
   <% if Branch.any? %>
   <p><form action="/patrons/<%=@patron.id%>/checkout" method="get">
-    Branch: <select name="branch_id">
-      <option disabled selected>
+    Check out new item from: <select name="branch_id">
       <% @branches.each do |branch| %>
-        <option value="<%=branch.id%>"><%= branch.name %></option>
+      <% branch.id == @patron.branch_id ? selected = "selected" : selected = "" %>
+        <option value="<%=branch.id%>" <%= selected %>><%= branch.name %></option>
       <% end %>
     </select>
-    <input type="submit", value="Check Out Item">
+    <input type="submit", value="View Available Works">
   </form></p>
   <% else %>
     <p><em>(No branches available from which to check out new items.

@@ -23,6 +23,7 @@ class Branch < ActiveRecord::Base
   format: {with: /\A([2-9](\d)(?!\1)\d-[2-9]\d\d-\d{4})?\Z/,
   message: "must be valid."}
   before_validation :format_phone_number
+  has_many :patrons
   has_many :staff_members
   has_many :copies
 

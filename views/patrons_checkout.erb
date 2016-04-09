@@ -1,7 +1,7 @@
 <a href="/patrons/<%=@patron.id%>"><< Back to <%= @patron.name %></a></br>
 <h1><%= @patron.name %> - Checkout (<%= @branch.name %> Branch)</h1>
 
-<p><% if @copies.where(branch_id: @branch.id) %>
+<p><% if @copies.find_by(branch_id: @branch.id, patron_id: nil) %>
   Available Works:<form action="/patrons/<%=@patron.id%>/checkout" method="post">
     <input type="hidden", name="branch_id", value="<%=@branch.id%>">
     <% @works.each { |work| %>

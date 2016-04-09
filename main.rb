@@ -169,12 +169,14 @@ end
 get "/patrons/new" do
   @page_name = "New Patron"
   @patron = Patron.new
+  @branches = Branch.all
   erb :patrons_new
 end
 
 post "/patrons/new" do
   @page_name = "New Patron"
   @patron = Patron.new(params)
+  @branches = Branch.all
   @patron.save ? redirect("/patrons") : (erb :patrons_new)
 end
 
@@ -188,6 +190,7 @@ end
 
 get "/patrons/:id/edit" do
   @patron = Patron.find_by_id(params['id'])
+  @branches = Branch.all
   @page_name = (@patron ? "Edit - #{@patron.name}" : "Error")
   erb :patrons_edit
 end
@@ -195,7 +198,8 @@ end
 post "/patrons/:id/edit" do
   @patron = Patron.find_by_id(params['id'])
   @page_name = (@patron ? "Edit - #{@patron.name}" : "Error")
-  @patron.update_attributes(name: params['name'], email: params['email']) ?
+  @branches = Branch.all
+  @patron.update_attributes(name: params['name'], email: params['email'], branch_id: params['branch_id']) ?
   redirect("/patrons/#{@patron.id}") : (erb :patrons_edit)
 end
 
@@ -215,5 +219,12 @@ post "/patrons/:id/checkout" do
   @copy = Copy.find_by_id(params['copy_id'])
   @copy.update_attributes(patron_id: params['id']) ?
     redirect("/patrons/#{@patron.id}") : (erb :patrons_checkout)
+end
+
+post "/patrons/:id/return" do
+  @copies = Copy.where(patron_id: params['id'])
+  @copies.each {|copy| copy.update_attributes(patron_id: nil) if params[copy.id.to_s] == copy.id.to_s}
+  #binding.pry
+  redirect("/patrons/#{params['id']}")
 end
 #binding.pry
