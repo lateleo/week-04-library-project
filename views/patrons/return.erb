@@ -1,0 +1,23 @@
+<% if @patron %>
+<a href="/patrons/<%=@patron.id%>"><< Back to <%= @patron.name %></a></br>
+  <h1><%= @patron.name %> - Return Items</h1>
+  <% if @errors.any? %>
+    <% @errors.each do |error| %>Error: The <%= Branch.find_by_id(error).name %> branch has no staff members.
+    Items cannot be returned to a branch if it has no staff members.
+    <% end %>
+  <% end %>
+  <p>Checked-out Items:<form action="/patrons/<%=@patron.id%>/return" method="post">
+    <% @copies.each {|copy| %>
+      <input type="checkbox", name ="<%=copy.id%>", value="<%= copy.id %>">
+        <a href="/works/<%=copy.work_id%>"><em><%= copy.work.title %></em></a>,
+        <%= copy.work.author %> (<%= copy.work.year %>)
+        Branch: <a href="/branches/<%= copy.branch_id %>"><%= copy.branch.name %></a></br>
+      </input>
+    <%}%>
+    </p><input type="submit" value="Return Selected Items">
+  </form>
+
+<% else %>
+  <h1>Error</h1>
+  <p>No patron with that ID exists</p>
+<% end %>

@@ -1,0 +1,15 @@
+<h1>Edit Work - <%= @work.title %></h1>
+
+<% if @work.errors.any? %>
+  <p><% @work.errors.full_messages.each do |m| %>
+    Error: <%= m %></br>
+  <% end %></p>
+<% end %>
+
+<form action="/works/<%= @work.id %>/edit" method="post">
+  <p>Title: <input type="text", name="title", value="<%= @work.title %>"></br>
+    Author: <input type="text", name="author", value="<%= @work.author %>"></br>
+    Year: <input type="text", name="year", value="<%= @work.year %>"></br>
+    ISBN: <input type="text", name="isbn", value="<%= @work.isbn %>"></br></p>
+  <input type="submit" value="Update Work">
+</form>

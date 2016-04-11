@@ -1,0 +1,14 @@
+<p><a href="/"><< Back to Library Menu</a></p>
+<h1>Works Index</h1>
+
+<% if Work.any? %>
+  <ol>
+    <% @works.each do |work| %>
+      <li><a href="/works/<%= work.id %>"><i><%= work.title %></i></a>, <%= work.author %> (<%= work.year %>)</li>
+    <% end %>
+  </ol>
+<% else %>
+  <p><em>(No Works currently registered)</em></p>
+<% end %>
+
+<p><a href="/works/new">New Work</a></p>

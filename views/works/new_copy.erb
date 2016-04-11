@@ -1,0 +1,26 @@
+<a href="/works/<%= @work.id %>"><< Back to <%= @work.title %></a></br>
+<h1> New Copy - <%= @work.title %></h1>
+
+<% if @copy.errors.any? %>
+  <p><% @copy.errors.full_messages.each do |m| %>
+    Error: <%= m %></br>
+  <% end %></p>
+<% end %>
+
+<% if Branch.any? %>
+  <form action="/works/<%= @work.id%>/new_copy" method="post">
+    <p>Branch: <select name="branch_id">
+      <option selected disabled>Choose One:</option>
+    <% @branches.each do |branch| %>
+      <% branch.id == @copy.branch_id ? selected = "selected" : selected = "" %>
+      <option value="<%= branch.id %>" <%= selected %>><%=branch.name%></option>
+    <% end %>
+  </select></br>
+  <em>(Don't see the right branch listed? <a href="/branches/new">Enter a new one here</a>.)</em></p>
+  <input type="submit" value="Create New Copy">
+  </form>
+<% else %>
+  <p><em>Before you can create new copies of a work,
+  you need to create a branch to which they are to be assigned.</em></br>
+  <a href="/branches/new">Create new Branch</a></p>
+<% end %>

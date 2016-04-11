@@ -1,0 +1,14 @@
+<p><a href="/"><< Back to Library Menu</a></p>
+<h1>Staff Members Index</h1>
+
+<% if StaffMember.any?%>
+  <ol>
+    <% @staff_members.each do |staff_member| %>
+      <li><a href="/staff_members/<%= staff_member.id %>"><%= staff_member.name %></a></li>
+    <% end %>
+  </ol>
+<% else %>
+  <p><em>(No staff members currently registered)</em></p>
+<% end %>
+
+<p><a href="/staff_members/new">New Staff Member</a></p>
