@@ -1,5 +1,4 @@
 require "test_helper"
-require_relative "../lib/branch.rb"
 
 class BranchTest < MiniTest::Test
 
