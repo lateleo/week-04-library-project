@@ -221,9 +221,25 @@ post "/patrons/:id/checkout" do
     redirect("/patrons/#{@patron.id}") : (erb :patrons_checkout)
 end
 
-post "/patrons/:id/return" do
+get "/patrons/:id/return" do
+  @patron = Patron.find_by_id(params['id'])
+  @page_name = (@patron ? "Return Items - #{@patron.name}" : "Error")
+  @errors = []
   @copies = Copy.where(patron_id: params['id'])
-  @copies.each {|copy| copy.update_attributes(patron_id: nil) if params[copy.id.to_s] == copy.id.to_s}
-  redirect("/patrons/#{params['id']}")
+  erb :patrons_return
+end
+
+post "/patrons/:id/return" do
+  @patron = Patron.find_by_id(params['id'])
+  @copies = Copy.where(patron_id: params['id'])
+  @errors = []
+  @copies.each {|copy| @errors.push(copy.branch.id) if
+    (params[copy.id.to_s] == copy.id.to_s) && !(copy.branch.staff_members.any?) && !(@errors.include?(copy.branch.id))}
+  if @errors.any?
+    erb :patrons_return
+  else
+    @copies.each {|copy| copy.update_attributes(patron_id: nil) if params[copy.id.to_s] == copy.id.to_s}
+    redirect("/patrons/#{params['id']}")
+  end
 end
 #binding.pry

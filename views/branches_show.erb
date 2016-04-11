@@ -3,14 +3,18 @@
   <h1><%= @branch.name %></h1>
 
   <p><em>Address:</em> <%= @branch.address %></br>
-  <em>Phone number:</em> <%= @branch.phone_number %></p>
+  <em>Phone number:</em> <%= @branch.phone_number %></br>
+  <a href="/branches/<%= @branch.id %>/edit">Edit info</a></p>
   <% if @staff_members.any? %>
     <p>Staff:</br>
     <ul><% @staff_members.each {|staff_member| %>
     <li><a href="/staff_members/<%= staff_member.id%>"><%= staff_member.name %></a></br><%}%>
     </ul></p>
+  <% else %>
+    <p><em>This branch has no staff members. Patrons will not be able to checkout items
+      until there is at least one staff member assigned to this branch.</em></br>
+      <a href="/staff_members/new">Enter New Staff Member Here</a></p>
   <% end %>
-  <p><a href="/branches/<%= @branch.id %>/edit">Edit info</a></p>
 <% else %>
   <h1>Error</h1>
   <p>No branch with that ID exists</p>

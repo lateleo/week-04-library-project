@@ -6,23 +6,21 @@
   <em>Primary Branch:</em> <a href="/branches/<%=@patron.branch_id%>"><%= @patron.branch.name %></a></br>
   <a href="/patrons/<%= @patron.id %>/edit">Edit info</a></p>
   <% if @copies.any? %>
-    <p>Checked-out Items:<form action="/patrons/<%=@patron.id%>/return" method="post">
-      <% @copies.each {|copy| %>
-        <input type="checkbox", name ="<%=copy.id%>", value="<%= copy.id %>">
-          <a href="/works/<%=copy.work_id%>"><em><%= copy.work.title %></em></a>,
+    <p>Checked-out Items:
+      <ul><% @copies.each {|copy| %>
+        <li><a href="/works/<%=copy.work_id%>"><em><%= copy.work.title %></em></a>,
           <%= copy.work.author %> (<%= copy.work.year %>)
-          Branch: <a href="/branches/<%= copy.branch_id %>"><%= copy.branch.name %></a></br>
-        </input>
-      <%}%>
-      </p><input type="submit" value="Return Selected Items">
-    </form>
+          Branch: <a href="/branches/<%= copy.branch_id %>"><%= copy.branch.name %></a></li>
+      <%}%></ul>
+      <a href="/patrons/<%=@patron.id%>/return">Return Items</a></p>
   <% end %>
   <% if Branch.any? %>
   <p><form action="/patrons/<%=@patron.id%>/checkout" method="get">
     Check out new item from: <select name="branch_id">
       <% @branches.each do |branch| %>
+      <% StaffMember.where(branch_id: branch.id).size >= 1 ? disabled = "" : disabled = "disabled" %>
       <% branch.id == @patron.branch_id ? selected = "selected" : selected = "" %>
-        <option value="<%=branch.id%>" <%= selected %>><%= branch.name %></option>
+        <option value="<%=branch.id%>" <%= selected %> <%= disabled %>><%= branch.name %><%= " (understaffed)" if disabled == "disabled" %></option>
       <% end %>
     </select>
     <input type="submit", value="View Available Works">
