@@ -1,16 +1,21 @@
 <a href="/patrons/<%=@patron.id%>"><< Back to <%= @patron.name %></a></br>
 <h1><%= @patron.name %> - Checkout (<%= @branch.name %> Branch)</h1>
 
-<p><% if @copies.find_by(branch_id: @branch.id, patron_id: nil) %>
-  Available Works:<form action="/patrons/<%=@patron.id%>/checkout" method="post">
-    <input type="hidden", name="branch_id", value="<%=@branch.id%>">
-    <% @works.each { |work| %>
-      <%(%><input type="radio", name="copy_id", value="<%= @copies.find_by(work_id: work.id, branch_id: @branch.id).id%>">
-        <em><%= work.title %></em></br><%) if @copies.find_by(work_id: work.id, branch_id: @branch.id) } %></p>
-    <p><input type="submit", value="Continue"></p>
-  </form>
+<% if @copies.where(patron_id: @patron.id).size < 3 %>
+  <% if @copies.find_by(branch_id: @branch.id, patron_id: nil) %>
+    <p>Available Works:<form action="/patrons/<%=@patron.id%>/checkout" method="post">
+      <input type="hidden", name="branch_id", value="<%=@branch.id%>">
+      <% @works.each { |work| %>
+        <%(%><input type="radio", name="copy_id", value="<%= @copies.find_by(work_id: work.id, branch_id: @branch.id).id%>">
+          <em><%= work.title %></em></br><%) if @copies.find_by(work_id: work.id, branch_id: @branch.id) } %></p>
+        <p><input type="submit", value="Continue"></p>
+    </form>
+  <% else %>
+    <p><em>(There are no works available for checkout at this branch.
+      <a href="/works">Here</a> is a list of works in the library system.
+      You can assign a new copy of a work to this branch by viewing the work's page.)</em></p>
+  <% end %>
 <% else %>
-  <em>(There are no works available for checkout at this branch.
-    <a href="/works">Here</a> is a list of works in the library system.
-    You can assign a new copy of a work to this branch by viewing the work's page.)</em>
+  <p><em><%= @patron.name %> already has the maximum number of items checked out,
+    and needs to return one or more in order to check out another.</em></p>
 <% end %>
