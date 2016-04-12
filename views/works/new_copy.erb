@@ -12,8 +12,9 @@
     <p>Branch: <select name="branch_id">
       <option selected disabled>Choose One:</option>
     <% @branches.each do |branch| %>
-      <% branch.id == @copy.branch_id ? selected = "selected" : selected = "" %>
-      <option value="<%= branch.id %>" <%= selected %>><%=branch.name%></option>
+    <% branch.staff_members.size >= 1 ? disabled = "" : disabled = "disabled" %>
+    <% branch.id == @copy.branch_id ? selected = "selected" : selected = "" %>
+      <option value="<%=branch.id%>" <%= selected %> <%= disabled %>><%= branch.name %><%= " (understaffed)" if disabled == "disabled" %></option>
     <% end %>
   </select></br>
   <em>(Don't see the right branch listed? <a href="/branches/new">Enter a new one here</a>.)</em></p>

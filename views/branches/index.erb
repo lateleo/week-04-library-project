@@ -4,7 +4,7 @@
 <% if @branches.any? %>
   <ol>
     <% @branches.each do |branch| %>
-      <li><a href="/branches/<%= branch.id %>"><%= branch.name %></a></li>
+      <li><a href="/branches/<%= branch.id %>"><%= branch.name %></a><em><%= " (understaffed)" if branch.staff_members.size < 1 %></em></li>
     <% end %>
   </ol>
 <% else %>

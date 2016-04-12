@@ -11,9 +11,10 @@
     <li><a href="/staff_members/<%= staff_member.id%>"><%= staff_member.name %></a></br><%}%>
     </ul></p>
   <% else %>
-    <p><em>This branch has no staff members. Patrons will not be able to checkout items
+    <p><em>This branch has no staff members. Items cannot be added, checked out, or returned
       until there is at least one staff member assigned to this branch.</em></br>
-      <a href="/staff_members/new">Enter New Staff Member Here</a></p>
+      <a href="/staff_members/new">Enter New Staff Member</a> -
+      <a href="/staff_members">Reassign Existing Staff Members</p>
   <% end %>
 <% else %>
   <h1>Error</h1>
