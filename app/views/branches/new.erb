@@ -15,5 +15,6 @@
                 value="<%= @branch.phone_number ? @branch.phone_number.slice(4,3) : ""%>"> -
                 <input type="text", name="local", maxlength="4", size="4",
                 value="<%= @branch.phone_number ? @branch.phone_number.slice(8,4) : ""%>"></p>
+  <input type="hidden" name="phone_number" value="">
   <input type="submit" value="Enter New Branch">
 </form>

@@ -1,0 +1,27 @@
+<h1>New Patron</h1>
+
+<% if @patron.errors.any? %>
+  <p><% @patron.errors.full_messages.each do |m| %>
+    Error: <%= m %></br>
+  <% end %></p>
+<% end %>
+
+<% if Branch.any? %>
+  <form action="/patrons/new" method="post">
+    <p>Name: <input type="text", name="name", value="<%= @patron.name %>"></br>
+      Email: <input type="text", name="email", value="<%= @patron.email %>"></br>
+      Primary Branch: <select name="branch_id">
+        <option selected disabled>Choose One:</option>
+        <% @branches.each do |branch| %>
+          <% branch.id == @patron.branch_id ? selected = "selected" : selected = "" %>
+          <option value="<%= branch.id %>" <%= selected %>><%=branch.name%></option>
+        <% end %>
+      </select>
+      <em>(Don't see the right branch listed? <a href="/branches/new">Enter a new one here</a>.)</em></p>
+      <input type="submit" value="Enter New Patron">
+  </form>
+<% else %>
+  <p><em>Before you can enter new patrons,
+  you need to create a branch to select as a patron's primary branch.</em></br>
+  <a href="/branches/new">Create New Branch</a></p>
+<% end %>

@@ -17,7 +17,7 @@
   <% if Branch.any? %>
   <p><form action="/patrons/<%=@patron.id%>/checkout" method="get">
     Check out new item from: <select name="branch_id">
-      <% @branches.each do |branch| %>
+      <% Branch.all.each do |branch| %>
       <% branch.staff_members.size >= 1 ? disabled = "" : disabled = "disabled" %>
       <% branch.id == @patron.branch_id ? selected = "selected" : selected = "" %>
         <option value="<%=branch.id%>" <%= selected %> <%= disabled %>><%= branch.name %><%= " (understaffed)" if disabled == "disabled" %></option>

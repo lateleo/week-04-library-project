@@ -14,14 +14,14 @@
       <option selected disabled>Choose One:</option>
       <% @branches.each do |branch| %>
         <% branch.id == @staff_member.branch_id ? selected = "selected" : selected = "" %>
-        <option value="<%= branch.id %>" <%= selected %>><%=branch.name%></option>
+        <option value="<%= branch.id %>" <%= selected %>><%=branch.name%><%= " (understaffed)" if disabled == "disabled" %></option>
       <% end %>
-    </select></br>
+    </select>
     <em>(Don't see the right branch listed? <a href="/branches/new">Enter a new one here</a>.)</em></p>
     <input type="submit" value="Enter New Staff Member">
   </form>
 <% else %>
-  <p><em>Before you can create new staff members,
+  <p><em>Before you can enter new staff members,
   you need to create a branch to which to assign them.</em></br>
-  <a href="/branches/new">Create new Branch</a></p>
+  <a href="/branches/new">Create New Branch</a></p>
 <% end %>

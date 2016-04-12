@@ -22,7 +22,6 @@ end
 get "/patrons/:id" do
   @patron = Patron.find_by_id(params['id'])
   @copies = Copy.where(patron_id: params['id'])
-  @branches = Branch.all
   @page_name = (@patron ? @patron.name : "Error")
   erb :"patrons/show"
 end
